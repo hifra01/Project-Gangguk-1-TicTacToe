@@ -8,7 +8,7 @@ boardDraw = ["1","2","3","4","5","6","7","8","9"]
 winCond = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
 
 # Player symbol
-player = ("O","X")
+player = ("X","O")
 
 # Drawing the board
 def draw():
@@ -52,8 +52,10 @@ def checkBoard(testVar):
     else:
         return False
 
-# Call this function to start the game
+# Reset all value to default and start the game
 def startGame():
+    for i in range(9):
+        boardDraw[i] = defaultBoard[i]
     initCheckWin = False
     draw()
     game(initCheckWin)
@@ -64,7 +66,7 @@ def game(varCheckWin):
     while varCheckWin != True:
         tryLoopOne = True
         while tryLoopOne == True:
-            boxPlayerOne = int(input("(Player 1 (O)) Pick a box number = "))
+            boxPlayerOne = int(input("(Player 1 (X)) Pick a box number = "))
             boardOK = checkBoard(boxPlayerOne)
             if boardOK == False:
                 print("The selected box is not empty. Try again.")
@@ -82,7 +84,7 @@ def game(varCheckWin):
             break
         tryLoopTwo = True
         while tryLoopTwo == True:
-            boxPlayerTwo = int(input("(Player 2 (X)) Pick a box number = "))
+            boxPlayerTwo = int(input("(Player 2 (O)) Pick a box number = "))
             boardOK = checkBoard(boxPlayerTwo)
             if boardOK == False:
                 print("The selected box is not empty. Try again.")
@@ -99,6 +101,25 @@ def game(varCheckWin):
             winPlayer = "Draw, no more move are allowed"
             break
     print(winPlayer)
+    gameEnd()
+
+def gameEnd():
+    playAgain = input("Do you want to play again? (y/N) ")
+    if playAgain == "":
+        playAgain = "N"
+    if playAgain == "y" or playAgain == "Y":
+        startGame()
+    else:
+        print("Goodbye")
+
+# Call this function to start the game
+def initGame():
+    print("======== TIC-TAC-TOE ========")
+    input("\n\n\nPress Enter to start the game")
+    startGame()
 
 # Start the game
-startGame()
+try:
+    initGame()
+except KeyboardInterrupt:
+    print("\nYou just forced quit the game. Goodbye.")
