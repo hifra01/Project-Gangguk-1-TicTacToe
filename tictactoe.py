@@ -1,3 +1,6 @@
+# Default box content, used for game reset and move check
+defaultBoard = ["1","2","3","4","5","6","7","8","9"]
+
 # Define box content for the first time
 boardDraw = ["1","2","3","4","5","6","7","8","9"]
 
@@ -24,6 +27,15 @@ def draw():
                     print("| "+boardDraw[col+6]+" |", end="")
             print("")
 
+# Check if there is no more move allowed
+def checkMove():
+    allowNextMove = False
+    for i in range(9):
+        if boardDraw[i] == defaultBoard[i]:
+            allowNextMove = True
+            break
+    return allowNextMove
+
 # Check if win condition is fulfilled
 def checkWin():
     win = False
@@ -48,6 +60,7 @@ def startGame():
 
 # The game process is here
 def game(varCheckWin):
+    winPlayer = ""
     while varCheckWin != True:
         tryLoopOne = True
         while tryLoopOne == True:
@@ -61,7 +74,11 @@ def game(varCheckWin):
         draw()
         varCheckWin = checkWin()
         if varCheckWin == True:
-            winPlayer = "Player 1"
+            winPlayer = "Player 1 win!"
+            break
+        nextMove = checkMove()
+        if nextMove == False:
+            winPlayer = "Draw, no more move are allowed"
             break
         tryLoopTwo = True
         while tryLoopTwo == True:
@@ -75,9 +92,13 @@ def game(varCheckWin):
         draw()
         varCheckWin = checkWin()
         if varCheckWin == True:
-            winPlayer = "Player 2"
+            winPlayer = "Player 2 win!"
             break
-    print(winPlayer, "win!")
+        nextMove = checkMove()
+        if nextMove == False:
+            winPlayer = "Draw, no more move are allowed"
+            break
+    print(winPlayer)
 
 # Start the game
 startGame()
