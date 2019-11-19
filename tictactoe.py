@@ -66,7 +66,7 @@ def game(varCheckWin):
     while varCheckWin != True:
         tryLoopOne = True
         while tryLoopOne == True:
-            boxPlayerOne = int(input("(Player 1 (X)) Pick a box number = "))
+            boxPlayerOne = inputBoxNumber("(Player 1 (X)) Pick a box number = ")
             boardOK = checkBoard(boxPlayerOne)
             if boardOK == False:
                 print("The selected box is not empty. Try again.")
@@ -84,7 +84,7 @@ def game(varCheckWin):
             break
         tryLoopTwo = True
         while tryLoopTwo == True:
-            boxPlayerTwo = int(input("(Player 2 (O)) Pick a box number = "))
+            boxPlayerTwo = inputBoxNumber("(Player 2 (0)) Pick a box number = ")
             boardOK = checkBoard(boxPlayerTwo)
             if boardOK == False:
                 print("The selected box is not empty. Try again.")
@@ -117,6 +117,23 @@ def initGame():
     print("======== TIC-TAC-TOE ========")
     input("\n\n\nPress Enter to start the game")
     startGame()
+
+def inputBoxNumber(name):
+    boxPlayer = 0
+    checkLoop = True
+    while checkLoop == True:
+        try:
+            errValue = False
+            boxPlayer = int(input(name))
+        except ValueError:
+            errValue = True
+        if errValue == True:
+            print("Please input a number")
+        elif boxPlayer < 1 or boxPlayer > 9:
+            print("Invalid box number. Please try again")
+        else:
+            checkLoop = False
+    return boxPlayer
 
 # Start the game
 try:
